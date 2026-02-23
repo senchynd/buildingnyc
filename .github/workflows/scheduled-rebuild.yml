@@ -1,0 +1,13 @@
+name: Scheduled rebuild
+
+on:
+  schedule:
+    - cron: '0 8 * * *'  # Every day at 8am UTC
+  workflow_dispatch:       # Also allows manual trigger from GitHub Actions UI
+
+jobs:
+  rebuild:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Cloudflare Pages rebuild
+        run: curl -X POST "${{ secrets.CF_DEPLOY_HOOK }}"

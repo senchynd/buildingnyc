@@ -1,0 +1,346 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getArticlesForProject } from '../../lib/rss.js';
+
+const articles = await getArticlesForProject('second-avenue-subway');
+
+const nyEvents = [
+  {
+    year: "1919",
+    title: "First proposed",
+    description: "A Second Avenue line is included in early city plans for subway expansion.",
+    phase: "planning",
+    article: null,
+  },
+  {
+    year: "1929",
+    title: "Formally planned",
+    description: "Included in the IND Second System — a massive expansion that will never be built.",
+    phase: "planning",
+    article: null,
+  },
+  {
+    year: "1972",
+    title: "Construction briefly starts",
+    description: "Ground is broken in three locations. Work halts almost immediately as the city's finances collapse.",
+    phase: "construction",
+    article: null,
+  },
+  {
+    year: "1975",
+    title: "Fiscal crisis kills the project",
+    description: "New York City's near-bankruptcy puts the subway on ice for a generation.",
+    phase: "delay",
+    article: null,
+  },
+  {
+    year: "1999",
+    title: "Planning restarts",
+    description: "A new environmental review begins — 80 years after the line was first proposed.",
+    phase: "planning",
+    article: null,
+  },
+  {
+    year: "2007",
+    title: "Construction begins",
+    description: "Phase 1 (96th to 63rd Street) finally breaks ground. Budget: $3.8 billion.",
+    phase: "construction",
+    article: null,
+  },
+  {
+    year: "2014",
+    title: "Original opening target",
+    description: "The project was supposed to be done. It was not. Budget has grown to $4.5 billion.",
+    phase: "delay",
+    article: null,
+  },
+  {
+    year: "2016",
+    title: "Emergency acceleration",
+    description: "Governor Cuomo personally intervenes, paying contractors $66M in overtime to force completion.",
+    phase: "delay",
+    article: null,
+  },
+  {
+    year: "Jan 2017",
+    title: "Phase 1 opens",
+    description: "Three new stations open at 72nd, 86th, and 96th Streets — 98 years after first proposal. Final cost: $4.6 billion.",
+    phase: "opening",
+    article: null,
+  },
+];
+
+const madridEvents = [
+  {
+    year: "1994",
+    title: "Expansion commissioned",
+    description: "The Madrid regional government commissions a plan to dramatically expand the metro system.",
+    phase: "planning",
+    article: null,
+  },
+  {
+    year: "1995",
+    title: "Construction begins",
+    description: "Work starts simultaneously on 40km of new lines and 37 stations. Budget: ~$1.7 billion.",
+    phase: "construction",
+    article: null,
+  },
+  {
+    year: "1998",
+    title: "First phase opens",
+    description: "40km of new track and 37 stations open — just three years after construction began.",
+    phase: "opening",
+    article: null,
+  },
+  {
+    year: "1999",
+    title: "Airport extension opens",
+    description: "A 12km extension to Barajas Airport is completed.",
+    phase: "opening",
+    article: null,
+  },
+  {
+    year: "2003",
+    title: "MetroSur opens",
+    description: "A 41km circular line connecting five southern suburbs opens. Total expansion: ~56km.",
+    phase: "opening",
+    article: null,
+  },
+];
+
+const costComparisons = [
+  { city: "New York (2nd Ave)", costPerKm: 1700, display: "$1,700M/km", highlight: "nyc" },
+  { city: "London (Crossrail) *", costPerKm: 700, display: "$700M/km", highlight: null },
+  { city: "Paris (Grand Paris Express)", costPerKm: 270, display: "$270M/km", highlight: null },
+  { city: "Istanbul (M5)", costPerKm: 80, display: "$80M/km", highlight: null },
+  { city: "Madrid †", costPerKm: 50, display: "$50M/km", highlight: "madrid" },
+  { city: "Seoul (Line 9)", costPerKm: 43, display: "$43M/km", highlight: null },
+];
+
+const maxCost = Math.max(...costComparisons.map(c => c.costPerKm));
+
+const issues = [
+  {
+    title: "Bloated station design",
+    stat: "77% of construction costs",
+    description: "Stations account for the vast majority of Phase 1's cost. NYC's station boxes are 150–260% larger than the actual passenger space — with enormous back-of-house rooms demanded by different MTA departments. Madrid's stations had virtually no excess space.",
+  },
+  {
+    title: "Labor costs & staffing",
+    stat: "40–60% of hard costs",
+    description: "Labor in NYC consumes twice the share of construction costs as in Europe (19–31%). A tunnel boring machine that requires 30 workers in Istanbul required 46 in NYC. A launch box that took one year to build in Madrid took three years here.",
+  },
+  {
+    title: "Consultant overload",
+    stat: "$452M in design fees",
+    description: "The MTA gutted its in-house engineering capacity over decades, replacing staff with expensive outside consultants. The design contract alone grew from $187M to $452M. Internationally, soft costs run 5–10% of construction; in NYC they hit 21%.",
+  },
+  {
+    title: "Procurement failures",
+    stat: "Only 2 bids on tunneling",
+    description: "Unusual risk allocation — MTA placed geological risk on contractors instead of absorbing it — drove away bidders and inflated prices. The main tunneling contract received only two bids. Contractors hedged uncertainty by pricing in 15–40% contingencies.",
+  },
+];
+---
+
+<BaseLayout title="The Most Expensive Subway in the World — Building NYC">
+  <article class="project-page">
+
+    <!-- HEADER -->
+    <header class="project-header">
+      <div class="project-header-inner">
+        <a href="/" class="project-breadcrumb">← Subways</a>
+        <h1 class="project-page-title">The most expensive subway ever built</h1>
+        <p class="project-intro">
+          Phase 1 of the Second Avenue Subway cost <strong>$4.6 billion</strong> to build 2.7 kilometers of tunnel and three stations. At roughly <strong>$1.7 billion per kilometer</strong>, it is the most expensive subway ever constructed — five to twenty times the cost of comparable projects in Europe. Here's how it happened.
+        </p>
+      </div>
+    </header>
+
+    <!-- STATS BAR -->
+    <div class="stats-bar">
+      <div class="stats-city-header">
+        New York City
+        <span class="stats-city-sub">Second Avenue Subway, Phase 1 · MTA</span>
+      </div>
+      <div class="stats-row">
+        <div class="stat-item">
+          <span class="stat-value">$4.6B</span>
+          <span class="stat-label">Total cost</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-value">$1.7B/km</span>
+          <span class="stat-label">Cost per kilometer</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-value">2.7km</span>
+          <span class="stat-label">New tunnel built</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-value">10 years</span>
+          <span class="stat-label">Construction time</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-value">18 years</span>
+          <span class="stat-label">From proposal to opening</span>
+        </div>
+      </div>
+      <div class="stats-city-header stats-city-header-madrid">
+        Madrid
+        <span class="stats-city-sub">Plan de Ampliación · Metro de Madrid</span>
+      </div>
+      <div class="stats-row stats-row-madrid">
+        <div class="stat-item">
+          <span class="stat-value">~$2.8B</span>
+          <span class="stat-label">Total cost</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-value">$50M/km</span>
+          <span class="stat-label">Cost per kilometer</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-value">56km</span>
+          <span class="stat-label">New tunnel built</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-value">3 years</span>
+          <span class="stat-label">Construction time</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-value">4 years</span>
+          <span class="stat-label">From proposal to opening</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- TIMELINE -->
+    <section class="timeline-section">
+      <div class="section-header">
+        <h2 class="section-title">Two timelines</h2>
+        <p class="section-description">
+          New York spent 10 years and $4.6 billion building 2.7km. Madrid built 56km in 3 years for $2.8 billion.
+        </p>
+      </div>
+
+      <div class="timeline-comparison">
+        <div class="timeline-column">
+          <div class="timeline-col-header">
+            <div class="timeline-city-block">
+              <span class="timeline-city">New York City</span>
+              <span class="timeline-city-project">Second Avenue Subway, Phase 1 · MTA</span>
+            </div>
+            <span class="timeline-col-stat">2.7km &middot; $4.6B &middot; 10 years construction</span>
+          </div>
+          <div class="timeline-track">
+            {nyEvents.map((event) => (
+              <div class={`timeline-event phase-${event.phase}`}>
+                <div class="event-dot"></div>
+                <div class="event-body">
+                  <span class="event-year">{event.year}</span>
+                  <h4 class="event-title">{event.title}</h4>
+                  <p class="event-description">{event.description}</p>
+                  {event.article && (
+                    <a href={event.article} class="event-article-link" target="_blank">
+                      Read: {event.article} →
+                    </a>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div class="timeline-column timeline-column-right">
+          <div class="timeline-col-header">
+            <div class="timeline-city-block">
+              <span class="timeline-city">Madrid</span>
+              <span class="timeline-city-project">Plan de Ampliación · Metro de Madrid</span>
+            </div>
+            <span class="timeline-col-stat">56km &middot; ~$2.8B &middot; 3 years construction</span>
+          </div>
+          <div class="timeline-track">
+            {madridEvents.map((event) => (
+              <div class={`timeline-event phase-${event.phase}`}>
+                <div class="event-dot"></div>
+                <div class="event-body">
+                  <span class="event-year">{event.year}</span>
+                  <h4 class="event-title">{event.title}</h4>
+                  <p class="event-description">{event.description}</p>
+                  {event.article && (
+                    <a href={event.article} class="event-article-link" target="_blank">
+                      Read: {event.article} →
+                    </a>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- COST COMPARISON -->
+    <section class="cost-section">
+      <div class="section-header">
+        <h2 class="section-title">Cost per kilometer</h2>
+        <p class="section-description">How New York compares to other major transit projects (2020 dollars).</p>
+      </div>
+      <div class="cost-bars">
+        {costComparisons.map((c) => (
+          <div class="cost-bar-row">
+            <span class="cost-city">{c.city}</span>
+            <div class="cost-bar-track">
+              <div
+                class={`cost-bar-fill${c.highlight ? ` cost-bar-${c.highlight}` : ""}`}
+                style={`width: ${(c.costPerKm / maxCost) * 100}%`}
+              ></div>
+            </div>
+            <span class="cost-display">{c.display}</span>
+          </div>
+        ))}
+      </div>
+      <p class="cost-caveat">All figures in 2020 USD. * Crossrail includes mainline rail infrastructure and is not a direct metro comparison. † Madrid figures include ~18.5km of above-ground track, which lowers the per-km average.</p>
+    </section>
+
+    <!-- KEY ISSUES -->
+    <section class="issues-section">
+      <div class="section-header">
+        <h2 class="section-title">Why did it cost so much and take so long?</h2>
+        <p class="section-description">Four structural problems identified by the <a href="https://transitcosts.com" target="_blank">Transit Costs Project</a> at NYU Marron Institute.</p>
+      </div>
+      <div class="issues-grid">
+        {issues.map((issue) => (
+          <div class="issue-card">
+            <span class="issue-stat">{issue.stat}</span>
+            <h3 class="issue-title">{issue.title}</h3>
+            <p class="issue-description">{issue.description}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- WHAT CAN WE DO -->
+    <section class="articles-section">
+      <div class="section-header">
+        <h2 class="section-title">What can we do about it?</h2>
+        <p class="section-description">Essays on what needs to change — and how.</p>
+      </div>
+      <div class="articles-grid">
+        {articles.map((article) => (
+          <a href={article.url} target="_blank" class="article-card">
+            <h3 class="article-title">{article.title}</h3>
+            <p class="article-description">{article.description}</p>
+            <span class="article-link">Read →</span>
+          </a>
+        ))}
+        <div class="article-card article-card-soon">
+          <span class="article-tag">Coming soon</span>
+          <h3 class="article-title">More coming soon</h3>
+          <p class="article-description">Subscribe to the newsletter to be notified when new essays are published.</p>
+          <a href="https://buildingnycdotco.substack.com" target="_blank" class="article-link">Subscribe →</a>
+        </div>
+      </div>
+    </section>
+
+  </article>
+</BaseLayout>
