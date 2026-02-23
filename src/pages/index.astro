@@ -1,17 +1,81 @@
 ---
+import BaseLayout from '../layouts/BaseLayout.astro';
 
+const categories = [
+  {
+    label: "Subways",
+    description: "The MTA and the cost of moving New York underground",
+    projects: [
+      {
+        tag: "Case Study",
+        title: "The most expensive subway in the world",
+        description: "The Second Avenue Subway cost more per mile than any transit project in history. How did we get here, and what does it mean for the future of public transit in New York?",
+        href: "/projects/second-avenue-subway",
+        live: true,
+      }
+    ]
+  },
+  {
+    label: "Housing",
+    description: "Why New York can't build enough homes for the people who need them",
+    projects: [
+      {
+        tag: "Coming Soon",
+        title: "The project that never ends",
+        description: "A deep dive into a major public housing development — the delays, the costs, and the human consequences of a broken system.",
+        href: "#",
+        live: false,
+      }
+    ]
+  },
+  {
+    label: "Other Infrastructure",
+    description: "Roads, schools, parks, and the broader cost of building anything in New York",
+    projects: [
+      {
+        tag: "Coming Soon",
+        title: "More coming soon",
+        description: "We're working on investigations into roads, schools, and other public infrastructure. Stay tuned.",
+        href: "#",
+        live: false,
+      }
+    ]
+  }
+];
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout title="Building NYC — Why does it cost so much to build?">
+  <section class="hero">
+    <h1 class="hero-question">
+      Why does it take so long <span>&</span> cost so much to build public housing and infrastructure in NYC?
+    </h1>
+    <p class="hero-subtitle">And how do we make it better?</p>
+  </section>
+
+  <section class="projects-section">
+    {categories.map((category) => (
+      <div class="category">
+        <div class="category-header">
+          <span class="category-label">{category.label}</span>
+          <span class="category-description">{category.description}</span>
+        </div>
+        <div class="project-grid">
+          {category.projects.map((project) => (
+            <a
+              href={project.href}
+              class={`project-card${!project.live ? ' coming-soon' : ''}`}
+              aria-disabled={!project.live}
+            >
+              <span class="project-tag">{project.tag}</span>
+              <h2 class="project-title">{project.title}</h2>
+              <p class="project-description">{project.description}</p>
+              {project.live && (
+                <span class="project-link">Read the investigation →</span>
+              )}
+            </a>
+          ))}
+        </div>
+      </div>
+    ))}
+  </section>
+</BaseLayout>

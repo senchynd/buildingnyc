@@ -1,0 +1,33 @@
+---
+import '../styles/global.css';
+const { title = "Building NYC" } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Why does it take so long and cost so much to build in NYC? We need more housing and infrastructure — here's what's standing in the way." />
+    <title>{title}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <nav class="nav">
+      <a href="/" class="nav-logo">Building NYC</a>
+      <div class="nav-links">
+        <a href="/about">About</a>
+        <a href="https://buildingnycdotco.substack.com" target="_blank">Newsletter</a>
+      </div>
+    </nav>
+    <main>
+      <slot />
+    </main>
+    <footer class="footer">
+      <span>© 2026 Building NYC</span>
+      <a href="https://buildingnycdotco.substack.com" target="_blank">Subscribe to the newsletter →</a>
+    </footer>
+  </body>
+</html>
