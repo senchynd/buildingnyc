@@ -1,45 +1,27 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 
-const categories = [
+const projects = [
   {
-    label: "Subways",
-    description: "The MTA and the cost of moving New York underground",
-    projects: [
-      {
-        tag: "Case Study",
-        title: "The most expensive subway in the world",
-        description: "The Second Avenue Subway cost more per mile than any transit project in history. How did we get here, and what does it mean for the future of public transit in New York?",
-        href: "/projects/second-avenue-subway",
-        live: true,
-      }
-    ]
+    type: "Subway",
+    title: "The most expensive subway ever built",
+    description: "The Second Avenue Subway cost more per mile than any transit project in history. How did we get here, and what does it mean for the future of public transit in New York?",
+    href: "/projects/second-avenue-subway",
+    live: true,
   },
   {
-    label: "Housing",
-    description: "Why New York can't build enough homes for the people who need them",
-    projects: [
-      {
-        tag: "Coming Soon",
-        title: "The project that never ends",
-        description: "A deep dive into a major public housing development — the delays, the costs, and the human consequences of a broken system.",
-        href: "#",
-        live: false,
-      }
-    ]
+    type: "Housing",
+    title: "How New York fell 433,000 homes behind",
+    description: "NYC claims to be on a record-building pace. But permits are running at a third of what's needed, and the deficit keeps growing. A look at the math — and the politics — behind New York's housing crisis.",
+    href: "/projects/nyc-housing-shortage",
+    live: true,
   },
   {
-    label: "Other Infrastructure",
-    description: "Roads, schools, parks, and the broader cost of building anything in New York",
-    projects: [
-      {
-        tag: "Coming Soon",
-        title: "More coming soon",
-        description: "We're working on investigations into roads, schools, and other public infrastructure. Stay tuned.",
-        href: "#",
-        live: false,
-      }
-    ]
+    type: "Infrastructure",
+    title: "More coming soon",
+    description: "We're working on investigations into roads, schools, and other public infrastructure. Stay tuned.",
+    href: "#",
+    live: false,
   }
 ];
 ---
@@ -53,29 +35,21 @@ const categories = [
   </section>
 
   <section class="projects-section">
-    {categories.map((category) => (
-      <div class="category">
-        <div class="category-header">
-          <span class="category-label">{category.label}</span>
-          <span class="category-description">{category.description}</span>
-        </div>
-        <div class="project-grid">
-          {category.projects.map((project) => (
-            <a
-              href={project.href}
-              class={`project-card${!project.live ? ' coming-soon' : ''}`}
-              aria-disabled={!project.live}
-            >
-              <span class="project-tag">{project.tag}</span>
-              <h2 class="project-title">{project.title}</h2>
-              <p class="project-description">{project.description}</p>
-              {project.live && (
-                <span class="project-link">Read the investigation →</span>
-              )}
-            </a>
-          ))}
-        </div>
-      </div>
-    ))}
+    <div class="project-grid">
+      {projects.map((project) => (
+        <a
+          href={project.href}
+          class={`project-card${!project.live ? ' coming-soon' : ''}`}
+          aria-disabled={!project.live}
+        >
+          <span class="project-tag">{project.type}</span>
+          <h2 class="project-title">{project.title}</h2>
+          <p class="project-description">{project.description}</p>
+          {project.live && (
+            <span class="project-link">Read the investigation →</span>
+          )}
+        </a>
+      ))}
+    </div>
   </section>
 </BaseLayout>

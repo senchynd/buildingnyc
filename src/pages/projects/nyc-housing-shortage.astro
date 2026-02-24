@@ -1,0 +1,146 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getArticlesForProject } from '../../lib/rss.js';
+
+const articles = await getArticlesForProject('nyc-housing-shortage');
+
+const gapData = [
+  { label: "Annual target", value: 50000, display: "50,000/yr", highlight: "nyc" },
+  { label: "Permits issued (2024)", value: 15626, display: "15,626/yr", highlight: null },
+];
+
+const maxGap = Math.max(...gapData.map(d => d.value));
+
+const barriers = [
+  {
+    title: "NIMBY opposition",
+    stat: "#1 barrier, per local officials",
+    description: "In surveys of local officials, NIMBYism ranks above construction costs, financing, and every other factor as the primary barrier to new housing. Community review processes add years and millions to individual projects. 14,000 pre-filed units have been stuck in pre-development for over five years.",
+  },
+  {
+    title: "Restrictive zoning",
+    stat: "Apartments illegal in most of the city",
+    description: "Multi-family housing is illegal to build across most of NYC's land area. The surrounding suburbs are even more locked down: Nassau, Suffolk, and Westchester counties permit fewer homes per capita than the SF Bay Area — in a metro region facing a 540,000-unit shortage.",
+  },
+  {
+    title: "Construction costs",
+    stat: "$600K+ per affordable unit",
+    description: "New York is the most expensive city in the world to build in. A single affordable unit costs over $600,000 to develop. At that cost, public subsidy programs can produce roughly 14,000 units a year citywide — a fraction of the 50,000 needed. The math doesn't work.",
+  },
+  {
+    title: "Targets set too low",
+    stat: "33,000 units short every year",
+    description: "NYC's 500,000-unit goal sounds ambitious. But it requires 50,000 new homes per year — and permits are running at roughly 17,000. Even the most optimistic projections for City of Yes add only ~5,500 units per year on top of that. The gap is still closing in the wrong direction.",
+  },
+];
+---
+
+<BaseLayout title="NYC's Housing Gap — Building NYC">
+  <article class="project-page">
+
+    <!-- HEADER -->
+    <header class="project-header">
+      <div class="project-header-inner">
+        <a href="/" class="project-breadcrumb">← Housing</a>
+        <h1 class="project-page-title">How New York fell 433,000 homes behind</h1>
+        <p class="project-intro">
+          New York City is facing its worst housing shortage in decades. The city has set an ambitious goal — <strong>500,000 new homes by 2034</strong> — and claims to be building at a record pace. But permits are running at <strong>a third of what's needed</strong>, the deficit is still widening, and the structural barriers have barely moved. Here's the math.
+        </p>
+      </div>
+    </header>
+
+    <!-- STATS BAR -->
+    <div class="stats-bar">
+      <div class="stats-city-header">
+        New York City
+        <span class="stats-city-sub">Housing shortage · 2024–2025</span>
+      </div>
+      <div class="stats-row">
+        <div class="stat-item">
+          <span class="stat-value">433K</span>
+          <span class="stat-label">Units short today</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-value">50,000</span>
+          <span class="stat-label">Units needed per year</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-value">~17,000</span>
+          <span class="stat-label">Units permitted per year</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-value">34%</span>
+          <span class="stat-label">Of annual need being met</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-value">+22% / +4%</span>
+          <span class="stat-label">Jobs vs. housing growth, 2010–2023</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- THE GAP -->
+    <section class="cost-section">
+      <div class="section-header">
+        <h2 class="section-title">The production gap</h2>
+        <p class="section-description">How many homes New York needs to build each year, versus how many it's actually permitting.</p>
+      </div>
+      <div class="cost-bars">
+        {gapData.map((d) => (
+          <div class="cost-bar-row">
+            <span class="cost-city">{d.label}</span>
+            <div class="cost-bar-track">
+              <div
+                class={`cost-bar-fill${d.highlight ? ` cost-bar-${d.highlight}` : ""}`}
+                style={`width: ${(d.value / maxGap) * 100}%`}
+              ></div>
+            </div>
+            <span class="cost-display">{d.display}</span>
+          </div>
+        ))}
+      </div>
+      <p class="cost-caveat">Annual target based on Mayor Adams' 500,000-unit-by-2034 goal. Permit figure from NYC Department of City Planning (2024). From 2010 to 2023, the city added 22% more jobs but only 4% more housing units.</p>
+    </section>
+
+    <!-- BARRIERS -->
+    <section class="issues-section">
+      <div class="section-header">
+        <h2 class="section-title">Why isn't it getting fixed?</h2>
+        <p class="section-description">Four structural barriers keeping New York from building the homes it needs.</p>
+      </div>
+      <div class="issues-grid">
+        {barriers.map((barrier) => (
+          <div class="issue-card">
+            <span class="issue-stat">{barrier.stat}</span>
+            <h3 class="issue-title">{barrier.title}</h3>
+            <p class="issue-description">{barrier.description}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- ARTICLES -->
+    <section class="articles-section">
+      <div class="section-header">
+        <h2 class="section-title">What can we do about it?</h2>
+        <p class="section-description">Essays on what needs to change — and how.</p>
+      </div>
+      <div class="articles-grid">
+        {articles.map((article) => (
+          <a href={article.url} class="article-card">
+            <h3 class="article-title">{article.title}</h3>
+            <p class="article-description">{article.description}</p>
+            <span class="article-link">Read →</span>
+          </a>
+        ))}
+        <div class="article-card article-card-soon">
+          <span class="article-tag">Coming soon</span>
+          <h3 class="article-title">More coming soon</h3>
+          <p class="article-description">Subscribe to the newsletter to be notified when new essays are published.</p>
+          <a href="https://buildingnycdotco.substack.com" target="_blank" class="article-link">Subscribe →</a>
+        </div>
+      </div>
+    </section>
+
+  </article>
+</BaseLayout>

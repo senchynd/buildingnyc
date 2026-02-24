@@ -95,31 +95,8 @@ a {
 .projects-section {
   max-width: var(--max-width);
   margin: 0 auto;
-}
-
-.category {
+  border-top: var(--border);
   border-bottom: var(--border);
-}
-
-.category-header {
-  display: flex;
-  align-items: baseline;
-  gap: 1rem;
-  padding: 2rem 2rem 1.5rem;
-  border-bottom: 1px solid var(--light-border);
-}
-
-.category-label {
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--accent);
-}
-
-.category-description {
-  font-size: 0.875rem;
-  color: var(--muted);
 }
 
 .project-grid {
@@ -722,5 +699,110 @@ a {
     gap: 0.5rem;
     text-align: center;
     padding: 1.5rem 1.25rem;
+  }
+
+  /* PROJECT PAGE */
+  .project-header {
+    padding: 2rem 1.25rem;
+  }
+
+  /* Stats bar */
+  .stats-city-header {
+    padding: 0.6rem 1.25rem;
+  }
+
+  .stats-row {
+    grid-template-columns: 1fr;
+  }
+
+  .stat-item {
+    border-right: none;
+    border-bottom: 1px solid var(--light-border);
+    padding: 1rem 1.25rem;
+  }
+
+  .stat-item:last-child {
+    border-bottom: none;
+  }
+
+  /* Timeline */
+  .timeline-comparison {
+    grid-template-columns: 1fr;
+  }
+
+  .timeline-column {
+    border-right: none;
+    border-bottom: 1px solid var(--light-border);
+    padding: 1.5rem 1.25rem 1rem;
+  }
+
+  .timeline-column-right {
+    border-bottom: none;
+  }
+
+  .timeline-col-header {
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  /* Cost bars */
+  .cost-bars {
+    padding: 1.5rem 1.25rem;
+  }
+
+  .cost-bar-row {
+    grid-template-columns: 1fr auto;
+  }
+
+  .cost-city {
+    grid-column: 1 / -1;
+    text-align: left;
+  }
+
+  .cost-caveat {
+    padding: 0 1.25rem 1.25rem;
+  }
+
+  /* Issues */
+  .issues-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .issue-card {
+    border-right: none;
+    border-bottom: 1px solid var(--light-border);
+  }
+
+  .issue-card:nth-child(2),
+  .issue-card:nth-child(4) {
+    border-right: none;
+  }
+
+  .issue-card:nth-child(3),
+  .issue-card:nth-child(4) {
+    border-bottom: 1px solid var(--light-border);
+  }
+
+  .issue-card:last-child {
+    border-bottom: none;
+  }
+
+  /* Articles */
+  .articles-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .article-card {
+    border-right: none;
+    border-bottom: 1px solid var(--light-border);
+  }
+
+  .article-card:last-child {
+    border-bottom: none;
+  }
+
+  /* Section headers */
+  .section-header {
+    padding: 1.5rem 1.25rem 1rem;
   }
 }
