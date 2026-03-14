@@ -12,6 +12,27 @@ function stripHtml(str) {
     .trim() ?? '';
 }
 
+export async function getRecentArticles(limit = 6) {
+  try {
+    const response = await fetch(`${SUBSTACK_BASE}/feed`);
+    const xml = await response.text();
+
+    const parser = new XMLParser({ ignoreAttributes: false });
+    const result = parser.parse(xml);
+    const raw = result.rss.channel.item;
+    const items = Array.isArray(raw) ? raw : raw ? [raw] : [];
+
+    return items.slice(0, limit).map(item => ({
+      title: stripHtml(item.title),
+      description: stripHtml(item.description ?? '').substring(0, 180) + '…',
+      url: item.link,
+    }));
+  } catch (e) {
+    console.error('RSS fetch failed:', e);
+    return [];
+  }
+}
+
 export async function getArticlesForProject(projectSlug) {
   try {
     const response = await fetch(`${SUBSTACK_BASE}/feed?tag=${projectSlug}`);

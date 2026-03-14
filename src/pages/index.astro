@@ -1,5 +1,8 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { getRecentArticles } from '../lib/rss.js';
+
+const recentArticles = await getRecentArticles(6);
 
 const projects = [
   {
@@ -17,23 +20,153 @@ const projects = [
     live: true,
   },
   {
-    type: "Infrastructure",
-    title: "More coming soon",
-    description: "We're working on investigations into roads, schools, and other public infrastructure. Stay tuned.",
+    type: "Energy & Resilience",
+    title: "Coming soon",
+    description: "New York has mandated 70% renewable electricity by 2030 — and is on track to miss it. We're investigating why clean energy is so hard to build here, and what it would take to fix that.",
     href: "#",
     live: false,
   }
 ];
+
+const policies = [
+  {
+    category: "Subway",
+    title: "Waive SEQRA for subway elevator construction",
+    description: "Environmental review adds years and millions to retrofits that have no meaningful environmental impact.",
+    note: "The MTA committed to full accessibility by 2035 in 2019 before retreating to 2055 under resource constraints. Current oversized elevator specs run ~$110M per station.",
+    steps: [
+      "Introduced in State Legislature",
+      "Committee approval — both chambers",
+      "Floor vote — both chambers",
+      "Signed by Governor",
+    ],
+    currentStep: -1,
+    bill: null,
+  },
+  {
+    category: "Subway",
+    title: "Appoint a transit construction czar",
+    description: "No single authority can force DOT, FDNY, and utilities to stop adding unreasonable demands to MTA projects.",
+    note: "The czar would need binding authority to issue rulings — not just advisory coordination, which has failed before. Each agency currently has effective veto power over project timelines.",
+    steps: [
+      "Proposed by Governor and Mayor",
+      "Executive order issued",
+    ],
+    currentStep: -1,
+    bill: null,
+  },
+  {
+    category: "Subway",
+    title: "Bring engineering expertise back in-house at the MTA",
+    description: "Decades of outsourcing gutted internal capacity and drove Phase 1 design fees from $187M to $452M.",
+    note: "Soft costs hit 21% of Phase 1's construction budget — international benchmark is 5–10%. The MTA had robust in-house engineering before the 1970s fiscal crisis eliminated it.",
+    steps: [
+      "Proposed by MTA leadership",
+      "MTA Board resolution passed",
+      "Governor budget support secured",
+    ],
+    currentStep: -1,
+    bill: null,
+  },
+  {
+    category: "Subway",
+    title: "Enable value capture financing for new transit lines",
+    description: "SAS Phase 1 cost $4.5B and generated $6B in nearby property value — none of which went back into transit.",
+    note: "Hudson Yards used value capture to fund the 7 train extension. SAS Phase 2 and the Interborough Express are the immediate candidates.",
+    steps: [
+      "Introduced in State Legislature",
+      "Committee approval — both chambers",
+      "Floor vote — both chambers",
+      "Signed by Governor",
+    ],
+    currentStep: -1,
+    bill: null,
+  },
+  {
+    category: "Energy",
+    title: "Automate solar permitting with SolarAPP+",
+    description: "Getting a permit for rooftop solar in New York City can take months — a tool that processes them in hours already exists.",
+    note: "SolarAPP+ is free, federally developed, and already in use in Colorado, California, Florida, and others. No development cost to the state.",
+    steps: [
+      "Introduced in State Legislature",
+      "Committee approval — both chambers",
+      "Floor vote — both chambers",
+      "Signed by Governor",
+    ],
+    currentStep: -1,
+    bill: null,
+  },
+  {
+    category: "Energy",
+    title: "Preempt local restrictions on solar projects",
+    description: "Restrictive local rules block an estimated 4.6 gigawatts of distributed solar across New York State.",
+    note: "Illinois passed equivalent legislation in 2021 and solar deployment doubled. Cities could still regulate aesthetics and safety — just not ban installations outright.",
+    steps: [
+      "Introduced in State Legislature",
+      "Committee approval — both chambers",
+      "Floor vote — both chambers",
+      "Signed by Governor",
+    ],
+    currentStep: -1,
+    bill: null,
+  },
+  {
+    category: "Energy",
+    title: "Direct NYPA to build transmission ahead of generation",
+    description: "New York will curtail 5–10 terawatt-hours of renewable energy by 2035 because transmission isn't keeping pace.",
+    note: "The Build Public Renewables Act (2023) already authorized NYPA to build renewables and transmission. Separate pending legislation would require co-location of lines along highway and railroad rights-of-way.",
+    steps: [
+      "Introduced in State Legislature",
+      "Committee approval — both chambers",
+      "Floor vote — both chambers",
+      "Signed by Governor",
+      "NYPA Board directive issued",
+    ],
+    currentStep: -1,
+    bill: null,
+  },
+  {
+    category: "Energy",
+    title: "Create a statewide Resilience Authority",
+    description: "Every county in New York has had a climate disaster declaration in the last decade, but no single authority can coordinate a statewide response.",
+    note: "Modeled on the MTA or Port Authority. Should include SEQRA and ULURP waivers for small to mid-sized resilience projects, and binding authority to execute property buyouts for flood-risk relocations.",
+    steps: [
+      "Introduced in State Legislature",
+      "Committee approval — both chambers",
+      "Floor vote — both chambers",
+      "Signed by Governor",
+    ],
+    currentStep: -1,
+    bill: null,
+  },
+];
+
+function getStatusLabel(policy) {
+  if (policy.currentStep === -1) return "Not started";
+  if (policy.currentStep >= policy.steps.length) return "Passed";
+  return policy.steps[policy.currentStep];
+}
+
+function getStatusClass(policy) {
+  if (policy.currentStep === -1) return "policy-status-proposed";
+  if (policy.currentStep >= policy.steps.length) return "policy-status-passed";
+  return "policy-status-active";
+}
 ---
 
-<BaseLayout title="Building NYC — Why does it cost so much to build?">
+<BaseLayout title="BuildingNYC">
   <section class="hero">
-    <h1 class="hero-question">
-      New York needs to build more. How can we do it <span>faster, better &amp; cheaper?</span>
-    </h1>
+    <div class="hero-inner">
+      <h1 class="hero-question">
+        New York needs to build more. How can we do it <span>faster, better &amp; cheaper?</span>
+      </h1>
+    </div>
   </section>
 
   <section class="projects-section">
+    <div class="projects-section-header">
+      <h2 class="projects-section-title">The problems</h2>
+    </div>
     <div class="project-grid">
       {projects.map((project) => (
         <a
@@ -51,4 +184,148 @@ const projects = [
       ))}
     </div>
   </section>
+
+  <section class="policy-section">
+    <div class="policy-section-header">
+      <h2 class="policy-section-title">The solutions</h2>
+    </div>
+    <div class="policy-grid">
+      {policies.map((policy, i) => (
+        <button
+          class="policy-card"
+          data-policy={i}
+          aria-haspopup="dialog"
+        >
+          <div class="policy-card-meta">
+            <span class={`policy-status ${getStatusClass(policy)}`}>{getStatusLabel(policy)}</span>
+            <span class={`policy-category policy-category-${policy.category.toLowerCase().replace(' & ', '-')}`}>{policy.category}</span>
+          </div>
+          <h3 class="policy-title">{policy.title}</h3>
+          <p class="policy-description">{policy.description}</p>
+          <span class="policy-open-hint">See pathway →</span>
+        </button>
+      ))}
+    </div>
+  </section>
+
+  <section class="articles-section">
+    <div class="section-header">
+      <h2 class="section-title">From the newsletter</h2>
+      <p class="section-description">Essays on what's broken — and how to fix it.</p>
+    </div>
+    <div class="articles-grid">
+      {recentArticles.map((article) => (
+        <a href={article.url} class="article-card" target="_blank">
+          <h3 class="article-title">{article.title}</h3>
+          <p class="article-description">{article.description}</p>
+          <span class="article-link">Read →</span>
+        </a>
+      ))}
+      <div class="article-card article-card-soon">
+        <h3 class="article-title">More coming soon</h3>
+        <p class="article-description">Subscribe to be notified when new essays are published.</p>
+        <a href="https://buildingnycdotco.substack.com" target="_blank" class="article-link" style="pointer-events: all;">Subscribe →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- MODAL -->
+  <div class="policy-modal-overlay" id="policy-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" hidden>
+    <div class="policy-modal">
+      <button class="policy-modal-close" id="modal-close" aria-label="Close">×</button>
+      <div class="policy-modal-meta" id="modal-meta"></div>
+      <h2 class="policy-modal-title" id="modal-title"></h2>
+      <p class="policy-modal-description" id="modal-description"></p>
+      <div class="pathway-timeline" id="modal-timeline"></div>
+      <p class="policy-modal-note" id="modal-note"></p>
+      <div class="policy-modal-bill" id="modal-bill-row" hidden>
+        <span class="policy-bill" id="modal-bill"></span>
+      </div>
+    </div>
+  </div>
 </BaseLayout>
+
+<script define:vars={{ policies }}>
+  const modal = document.getElementById('policy-modal');
+  const closeBtn = document.getElementById('modal-close');
+
+  function getStatusLabel(policy) {
+    if (policy.currentStep === -1) return "Not started";
+    if (policy.currentStep >= policy.steps.length) return "Passed";
+    return policy.steps[policy.currentStep];
+  }
+
+  function getStatusClass(policy) {
+    if (policy.currentStep === -1) return "policy-status-proposed";
+    if (policy.currentStep >= policy.steps.length) return "policy-status-passed";
+    return "policy-status-active";
+  }
+
+  function buildTimeline(steps, currentStep) {
+    return steps.map((step, i) => {
+      let state;
+      if (currentStep === -1) {
+        state = "upcoming";
+      } else if (i < currentStep) {
+        state = "done";
+      } else if (i === currentStep) {
+        state = "active";
+      } else {
+        state = "upcoming";
+      }
+
+      const isLast = i === steps.length - 1;
+      return `
+        <div class="timeline-step timeline-step-${state}">
+          <div class="timeline-step-left">
+            <div class="timeline-step-dot"></div>
+            ${!isLast ? '<div class="timeline-step-line"></div>' : ''}
+          </div>
+          <div class="timeline-step-label">${step}</div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  function openModal(i) {
+    const p = policies[i];
+    const catClass = `policy-category policy-category-${p.category.toLowerCase().replace(' & ', '-')}`;
+
+    document.getElementById('modal-meta').innerHTML = `
+      <span class="policy-status ${getStatusClass(p)}">${getStatusLabel(p)}</span>
+      <span class="${catClass}">${p.category}</span>
+    `;
+    document.getElementById('modal-title').textContent = p.title;
+    document.getElementById('modal-description').textContent = p.description;
+    document.getElementById('modal-timeline').innerHTML = buildTimeline(p.steps, p.currentStep);
+
+    const noteEl = document.getElementById('modal-note');
+    noteEl.textContent = p.note || '';
+    noteEl.hidden = !p.note;
+
+    const billRow = document.getElementById('modal-bill-row');
+    if (p.bill) {
+      document.getElementById('modal-bill').textContent = p.bill;
+      billRow.hidden = false;
+    } else {
+      billRow.hidden = true;
+    }
+
+    modal.hidden = false;
+    document.body.style.overflow = 'hidden';
+    closeBtn.focus();
+  }
+
+  function closeModal() {
+    modal.hidden = true;
+    document.body.style.overflow = '';
+  }
+
+  document.querySelectorAll('.policy-card').forEach(card => {
+    card.addEventListener('click', () => openModal(Number(card.dataset.policy)));
+  });
+
+  closeBtn.addEventListener('click', closeModal);
+  modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && !modal.hidden) closeModal(); });
+</script>
